@@ -42,14 +42,22 @@ public class TripServiceShould {
 	}
 
 	private class TripServiceForTest extends TripService {
+		
+		private TripDAO tripDAO = new TripDAO(){
+			@Override
+			public List<Trip> findTripsFor(User user){
+				return user.trips();
+			}
+		};
+		
 		@Override
 		protected User getLoggedInUser() {
 			return loggedInUser;
 		}
-
+		
 		protected List<Trip> getTripsForUser(User user) {
-			return user.trips();
-		}
+			return tripDAO.findTripsFor(user);
+		}		
 	}
 
 	public static class UserBuilder {
