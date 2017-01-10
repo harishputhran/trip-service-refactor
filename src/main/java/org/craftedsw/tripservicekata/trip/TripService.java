@@ -1,9 +1,10 @@
 package org.craftedsw.tripservicekata.trip;
 
-import java.util.ArrayList;
+import static java.util.Collections.emptyList;
+
 import java.util.List;
 
-import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
+import org.craftedsw.tripservicekata.exception.UserDetailsUnavailableException;
 import org.craftedsw.tripservicekata.user.User;
 
 public class TripService {
@@ -14,7 +15,8 @@ public class TripService {
 		tripDAO = new TripDAO();
 	}
 
-	public List<Trip> getTripsWithFriend(User user, User loggedInUser) throws UserNotLoggedInException {
+	public List<Trip> getTripsWithFriend(User user, User loggedInUser) 
+								throws UserDetailsUnavailableException {
 		validateLoggedInUser(loggedInUser);		
 		return user.isFriendsWith(loggedInUser) 
 					? getTripsForUser(user)
@@ -23,12 +25,13 @@ public class TripService {
 
 	private void validateLoggedInUser(User loggedInUser) {
 		if(loggedInUser == null){
-			throw new UserNotLoggedInException();
+			throw new UserDetailsUnavailableException
+						("Logged In User details unavailable.");
 		}
 	}
 
 	private List<Trip> noTrips() {
-		return new ArrayList<>();
+		return emptyList();
 	}
 
 	protected List<Trip> getTripsForUser(User user) {

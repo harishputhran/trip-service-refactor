@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
+import org.craftedsw.tripservicekata.exception.UserDetailsUnavailableException;
 import org.craftedsw.tripservicekata.user.User;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class TripServiceShould {
 	private final Trip SHIMLA = new Trip();
 	private final Trip ASSAM = new Trip();
 
-	@Test(expected = UserNotLoggedInException.class)
+	@Test(expected = UserDetailsUnavailableException.class)
 	public void return_exception_when_user_is_not_logged_in() {
 		User GUEST = null;
 		TripService tripService = new TripServiceForTest();
